@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
 const pretendard = localFont({
-  src: '../assets/fonts/PretendardVariable.woff2', // woff2: 폰트 파일 크기 줄이기 위해 사용
+  src: '../asset/fonts/PretendardVariable.woff2', // woff2: 폰트 파일 크기 줄이기 위해 사용
   display: 'swap', // 폰트 로딩 방식 설정 (swap: 폰트 로딩 시 대체 폰트 사용)
 });
 
