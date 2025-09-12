@@ -41,6 +41,11 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+@theme {
+  --spacing-26: 6.25rem;
+  --color-port-primary: #33388a;
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -117,8 +122,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-html {
-  font-size: 62.5%; /* 10px = 1rem */
 }

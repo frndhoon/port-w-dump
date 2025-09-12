@@ -3,6 +3,8 @@ import '@/app/globals.css';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
+import { Navbar } from '@/component/navbar';
+
 const pretendard = localFont({
   src: '../asset/fonts/PretendardVariable.woff2', // woff2: 폰트 파일 크기 줄이기 위해 사용
   display: 'swap', // 폰트 로딩 방식 설정 (swap: 폰트 로딩 시 대체 폰트 사용)
@@ -34,7 +36,14 @@ const RootLayout = ({
   return (
     <html lang="en">
       {/* body에 직접 폰트 클래스 적용 -> font-family 적용 */}
-      <body className={`${pretendard.className}`}>{children}</body>
+      <body className={`${pretendard.className}`}>
+        <div className="relative flex overflow-hidden">
+          <Navbar />
+          <main className="relative h-screen w-full flex-1 overflow-hidden overflow-x-auto">
+            {children}
+          </main>
+        </div>
+      </body>
     </html>
   );
 };
