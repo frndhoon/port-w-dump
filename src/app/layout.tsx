@@ -1,16 +1,11 @@
 import '@/app/globals.css';
 
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+const pretendard = localFont({
+  src: '../assets/fonts/PretendardVariable.woff2', // woff2: 폰트 파일 크기 줄이기 위해 사용
+  display: 'swap', // 폰트 로딩 방식 설정 (swap: 폰트 로딩 시 대체 폰트 사용)
 });
 
 const metadata: Metadata = {
@@ -25,11 +20,8 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      {/* body에 직접 폰트 클래스 적용 -> font-family 적용 */}
+      <body className={`${pretendard.className}`}>{children}</body>
     </html>
   );
 };
