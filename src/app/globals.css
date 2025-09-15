@@ -42,8 +42,16 @@
 }
 
 @theme {
-  --spacing-26: 6.25rem;
-  --color-port-primary: #33388a;
+  --text-2_5xl: 1.75rem; /* 28px */
+  --spacing-26: 6.25rem; /* 100px */
+
+  /* 커스텀 컬러 */
+  --color-primary: #33388a;
+  --color-secondary: #f08300;
+  --color-filter: #ededed;
+  --color-table-row: #ededed;
+  --color-stroke: #dedede;
+  --color-control: #bcbcbc;
 }
 
 :root {
@@ -122,4 +130,42 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+h1 {
+  @apply text-2_5xl font-semibold;
+}
+
+h2 {
+  @apply text-xl font-semibold;
+}
+
+/* 스크롤바 항상 표시 */
+.scrollbar-always {
+  scrollbar-width: auto; /* Firefox */
+  -webkit-overflow-scrolling: touch; /* iOS */
+}
+
+.scrollbar-always::-webkit-scrollbar {
+  width: 12px; /* 세로 스크롤바 너비 */
+  height: 12px; /* 가로 스크롤바 높이 */
+}
+
+.scrollbar-always::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 6px;
+}
+
+.scrollbar-always::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 6px;
+  border: 2px solid #f1f1f1;
+}
+
+.scrollbar-always::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.scrollbar-always::-webkit-scrollbar-corner {
+  background: #f1f1f1;
 }

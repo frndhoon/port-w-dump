@@ -127,6 +127,72 @@ const ContainerIcon = ({ color = 'black' }: { color?: string }) => (
   </svg>
 );
 
+const ExcelIcon = ({ color = 'black' }: { color?: string }) => (
+  <svg
+    width="20"
+    height="20"
+    className={`h-[2.5rem] w-[2.5rem] stroke-[${color}] object-contain`}
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M1 3.66406V16.3778H18.1973V3.66406H1ZM0.932056 2.66406C0.417296 2.66406 0 3.08136 0 3.59612V16.4458C0 16.9605 0.417296 17.3778 0.932056 17.3778H18.2652C18.78 17.3778 19.1973 16.9605 19.1973 16.4458V3.59612C19.1973 3.08136 18.78 2.66406 18.2652 2.66406H0.932056Z"
+      fill="white"
+    />
+    <rect
+      x="14.2383"
+      y="5.7124"
+      width="2.35965"
+      height="1.54716"
+      fill="white"
+    />
+    <rect
+      x="14.2383"
+      y="9.25977"
+      width="2.35965"
+      height="1.54716"
+      fill="white"
+    />
+    <rect
+      x="14.2383"
+      y="12.8066"
+      width="2.35965"
+      height="1.54716"
+      fill="white"
+    />
+    <rect
+      x="11.5586"
+      y="5.7124"
+      width="1.46208"
+      height="1.54716"
+      fill="white"
+    />
+    <rect
+      x="11.5586"
+      y="9.25977"
+      width="1.46208"
+      height="1.54716"
+      fill="white"
+    />
+    <rect
+      x="11.5586"
+      y="12.8066"
+      width="1.46208"
+      height="1.54716"
+      fill="white"
+    />
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M11.5562 0.5L0 2.66419V17.378L11.5562 19.5421V0.5ZM6.71448 6.31983H8.2606L6.06745 10.033L8.26066 13.7462H6.71453L5.29439 11.3418L3.87425 13.7462H2.32812L4.52133 10.033L2.32818 6.31983H3.8743L5.29439 8.72411L6.71448 6.31983Z"
+      fill="white"
+    />
+  </svg>
+);
+
 const ScheduleIcon = ({ color = 'black' }: { color?: string }) => (
   <svg
     width="24"
@@ -289,6 +355,7 @@ const UserIcon = ({ color = 'black' }: { color?: string }) => (
 
 export {
   ContainerIcon,
+  ExcelIcon,
   ScheduleIcon,
   ShipMonitoringIcon,
   StatisticsIcon,

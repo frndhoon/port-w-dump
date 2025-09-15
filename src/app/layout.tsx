@@ -39,7 +39,7 @@ const RootLayout = ({
       <body className={`${pretendard.className}`}>
         <div className="relative flex overflow-hidden">
           <Navbar />
-          <main className="relative h-screen w-full flex-1 overflow-hidden overflow-x-auto">
+          <main className="relative h-screen w-full flex-1 overflow-x-auto overflow-y-hidden scrollbar-always">
             {children}
           </main>
         </div>
