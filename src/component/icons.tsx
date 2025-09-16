@@ -2,7 +2,8 @@ const ShipMonitoringIcon = ({ color = 'black' }: { color?: string }) => (
   <svg
     width="31"
     height="29"
-    className={`h-[2.5rem] w-[2.5rem] stroke-[${color}] object-contain`}
+    className="h-[2.5rem] w-[2.5rem] object-contain"
+    style={{ color: color }}
     viewBox="0 0 31 29"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +62,8 @@ const ContainerIcon = ({ color = 'black' }: { color?: string }) => (
   <svg
     width="29"
     height="23"
-    className={`h-[2.5rem] w-[2.5rem] stroke-[${color}] object-contain`}
+    className="h-[2.5rem] w-[2.5rem] object-contain"
+    style={{ color: color }}
     viewBox="0 0 29 23"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +133,8 @@ const ExcelIcon = ({ color = 'black' }: { color?: string }) => (
   <svg
     width="20"
     height="20"
-    className={`h-[2.5rem] w-[2.5rem] stroke-[${color}] object-contain`}
+    className="h-[2.5rem] w-[2.5rem] object-contain"
+    style={{ color: color }}
     viewBox="0 0 20 20"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -197,7 +200,8 @@ const ScheduleIcon = ({ color = 'black' }: { color?: string }) => (
   <svg
     width="24"
     height="26"
-    className={`h-[2.5rem] w-[2.5rem] stroke-[${color}] object-contain`}
+    className="h-[2.5rem] w-[2.5rem] object-contain"
+    style={{ color: color }}
     viewBox="0 0 24 26"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -289,7 +293,8 @@ const StatisticsIcon = ({ color = 'black' }: { color?: string }) => (
   <svg
     width="32"
     height="22"
-    className={`h-[2.5rem] w-[2.5rem] stroke-[${color}] object-contain`}
+    className="h-[2.5rem] w-[2.5rem] object-contain"
+    style={{ color: color }}
     viewBox="0 0 32 22"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -333,7 +338,8 @@ const UserIcon = ({ color = 'black' }: { color?: string }) => (
   <svg
     width="26"
     height="26"
-    className={`h-[2.5rem] w-[2.5rem] stroke-[${color}] object-contain`}
+    className="h-[2.5rem] w-[2.5rem] object-contain"
+    style={{ color: color }}
     viewBox="0 0 26 26"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
