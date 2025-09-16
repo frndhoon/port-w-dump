@@ -151,18 +151,16 @@ const TContainerPage = () => {
                 </Select>
               </div>
 
-              <div>
-                <RadioGroup className="flex flex-row" defaultValue="ALL">
-                  <RadioGroupItem value="ALL" id="RADIO_ALL">
-                    전체(누적)
-                  </RadioGroupItem>
+              <RadioGroup className="flex flex-row" defaultValue="ALL">
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem value="ALL" id="RADIO_ALL" />
                   <Label htmlFor="RADIO_ALL">전체(누적)</Label>
-                  <RadioGroupItem value="CURRENT" id="CURRENT">
-                    현재
-                  </RadioGroupItem>
+                </div>
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem value="CURRENT" id="CURRENT" />
                   <Label htmlFor="CURRENT">현재</Label>
-                </RadioGroup>
-              </div>
+                </div>
+              </RadioGroup>
             </div>
           </div>
 
