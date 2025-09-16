@@ -6,16 +6,25 @@ import * as React from 'react';
 
 import { cn } from '@/lib/shadcn.lib';
 
+// 커스텀 컴포넌트 추가
+interface CheckboxProps
+  extends React.ComponentProps<typeof CheckboxPrimitive.Root> {
+  variant?: 'default' | 'custom';
+}
+
 const Checkbox = ({
   className,
+  variant = 'default',
   ...props
-}: React.ComponentProps<typeof CheckboxPrimitive.Root>) => {
+}: CheckboxProps) => {
   return (
     <CheckboxPrimitive.Root
       data-slot="checkbox"
       className={cn(
-        'peer border-input dark:bg-input/30 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground dark:data-[state=checked]:bg-primary data-[state=checked]:border-primary focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive size-4 shrink-0 rounded-[4px] border shadow-xs transition-shadow outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50',
-        className,
+        'peer border-input dark:bg-input/30 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground dark:data-[state=checked]:bg-primary data-[state=checked]:border-primary focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive size-4 shrink-0 rounded-[4px] border shadow-xs transition-shadow outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 flex items-center justify-center',
+        variant === 'custom' && 'border-control',
+
+        className
       )}
       {...props}
     >
