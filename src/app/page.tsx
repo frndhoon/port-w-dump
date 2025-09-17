@@ -1,11 +1,7 @@
+import { redirect } from 'next/navigation';
+
 const HomePage = () => {
-  return (
-    <div>
-      <div>
-        <h1>Port-W Dump</h1>
-      </div>
-    </div>
-  );
+  redirect('/t-container');
 };
 
 export default HomePage;

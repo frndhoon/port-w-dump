@@ -3,7 +3,9 @@ import '@/app/globals.css';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
+import { SuccessIcon } from '@/component/icons';
 import { Navbar } from '@/component/navbar';
+import { Toaster } from '@/component/shadcn-ui/sonner';
 import { QueryProvider } from '@/provider/query-provider';
 
 const pretendard = localFont({
@@ -44,6 +46,24 @@ const RootLayout = ({
             <main className="relative h-screen w-full flex-1 overflow-x-auto overflow-y-hidden scrollbar-always">
               {children}
             </main>
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                style: {
+                  fontSize: '14px',
+                  fontFamily: 'Pretendard-Regular',
+                  wordBreak: 'break-all',
+                  whiteSpace: 'pre-wrap',
+                  background: 'black',
+                  color: 'white',
+                  borderColor: 'black',
+                },
+              }}
+              visibleToasts={1}
+              icons={{
+                success: <SuccessIcon />,
+              }}
+            />
           </div>
         </QueryProvider>
       </body>
