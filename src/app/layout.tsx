@@ -3,6 +3,11 @@ import '@/app/globals.css';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
+import { SuccessIcon } from '@/component/icons';
+import { Navbar } from '@/component/navbar';
+import { Toaster } from '@/component/shadcn-ui/sonner';
+import { QueryProvider } from '@/provider/query-provider';
+
 const pretendard = localFont({
   src: '../asset/fonts/PretendardVariable.woff2', // woff2: 폰트 파일 크기 줄이기 위해 사용
   display: 'swap', // 폰트 로딩 방식 설정 (swap: 폰트 로딩 시 대체 폰트 사용)
@@ -34,7 +39,34 @@ const RootLayout = ({
   return (
     <html lang="en">
       {/* body에 직접 폰트 클래스 적용 -> font-family 적용 */}
-      <body className={`${pretendard.className}`}>{children}</body>
+      <body className={`${pretendard.className}`}>
+        <QueryProvider>
+          <div className="relative flex overflow-hidden">
+            <Navbar />
+            <main className="relative h-screen w-full flex-1 overflow-x-auto overflow-y-hidden scrollbar-always">
+              {children}
+            </main>
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                style: {
+                  fontSize: '14px',
+                  fontFamily: 'Pretendard-Regular',
+                  wordBreak: 'break-all',
+                  whiteSpace: 'pre-wrap',
+                  background: 'black',
+                  color: 'white',
+                  borderColor: 'black',
+                },
+              }}
+              visibleToasts={1}
+              icons={{
+                success: <SuccessIcon />,
+              }}
+            />
+          </div>
+        </QueryProvider>
+      </body>
     </html>
   );
 };
