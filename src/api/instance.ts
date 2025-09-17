@@ -1,4 +1,10 @@
 import { ApiResponse } from '@/type/api.type';
+import {
+  createHttpError,
+  createNetworkError,
+  getErrorMessage,
+  isNetworkError,
+} from '@/util/error-utils';
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 const ACCESS_TOKEN = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
@@ -12,13 +18,32 @@ const getInstance = async <T>(endpoint: string): Promise<ApiResponse<T>> => {
       },
     });
 
+    // fetch는 400, 500 에러를 모두 처리하지 않음
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorMessage = getErrorMessage(response.status);
+      const httpError = createHttpError(
+        response.status,
+        errorMessage.message,
+        `HTTP_${response.status}`
+      );
+
+      console.error('GET 요청 실패:', {
+        endpoint,
+        status: response.status,
+        userMessage: errorMessage,
+      });
+
+      throw httpError;
     }
 
     return await response.json();
   } catch (error) {
-    console.error('GET 요청 실패:', error);
+    // 네트워크 오류나 기타 예외 처리
+    if (isNetworkError(error)) {
+      throw createNetworkError();
+    }
+
+    // 이미 처리된 HTTP 에러는 그대로 전달
     throw error;
   }
 };
@@ -42,14 +67,33 @@ const postInstance = async <TRequest, TResponse>(
       body: data ? JSON.stringify(data) : null,
     });
 
+    // fetch는 400, 500 에러를 모두 처리하지 않음
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const result = await response.json();
+      const errorMessage = getErrorMessage(response.status);
+      const httpError = createHttpError(
+        response.status,
+        errorMessage.message,
+        `HTTP_${response.status}`
+      );
 
+      console.error('POST 요청 실패:', {
+        endpoint,
+        status: response.status,
+        userMessage: errorMessage,
+      });
+
+      throw httpError;
+    }
+
+    const result = await response.json();
     return result;
   } catch (error) {
-    console.error('POST 요청 실패:', error);
+    // 네트워크 오류나 기타 예외 처리
+    if (isNetworkError(error)) {
+      throw createNetworkError();
+    }
+
+    // 이미 처리된 HTTP 에러는 그대로 전달
     throw error;
   }
 };

@@ -1,4 +1,5 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
 import { getInstance, postInstance } from '@/api/instance';
 import {
@@ -6,6 +7,11 @@ import {
   TContainerListRequest,
   TContainerListResponse,
 } from '@/app/t-container/t-container.type';
+import {
+  shouldRetry,
+  showDetailErrorMessage,
+  showListErrorMessage,
+} from '@/util/error-utils';
 
 // 컨테이너 목록 조회
 const useTContainerList = (
@@ -18,10 +24,10 @@ const useTContainerList = (
     sort: pagination.sort,
   };
 
-  const { data, isLoading, isError, isFetching, refetch } = useQuery<
+  const { data, isLoading, isError, isFetching, refetch, error } = useQuery<
     TContainerListResponse['result']
   >({
-    queryKey: ['tContainerList', requestBody, pagination], // pagination 다시 추가
+    queryKey: ['tContainerList', requestBody, pagination],
     queryFn: async () => {
       const responseData = await postInstance<
         TContainerListRequest,
@@ -31,19 +37,35 @@ const useTContainerList = (
       return responseData.result;
     },
 
-    placeholderData: keepPreviousData, // 이전 데이터를 유지하여 페이지네이션 시 부드러운 전환
-    staleTime: 5 * 60 * 1000, // 5분간 데이터를 fresh로 유지
+    placeholderData: keepPreviousData,
+    staleTime: 5 * 60 * 1000,
+    retry: shouldRetry,
   });
 
-  return { data, isLoading, isError, isFetching, refetch };
+  // 에러 발생 시 토스트 메시지 표시
+  useEffect(() => {
+    if (error) {
+      showListErrorMessage(error);
+    }
+  }, [error]);
+
+  return { data, isLoading, isError, isFetching, refetch, error };
 };
 
 // 컨테이너 상세 조회
 const useTContainerDetail = (id: string) => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['tContainerDetail'],
+    queryKey: ['tContainerDetail', id],
     queryFn: () => getInstance(`/containers/monitoring/${id}`),
+    retry: shouldRetry,
   });
+
+  // 에러 발생 시 토스트 메시지 표시
+  useEffect(() => {
+    if (error) {
+      showDetailErrorMessage(error);
+    }
+  }, [error]);
 
   return { data, isLoading, error };
 };
