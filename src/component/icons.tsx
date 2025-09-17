@@ -1,4 +1,19 @@
-const ShipMonitoringIcon = ({ color = 'black' }: { color?: string }) => (
+const RightArrowIcon = ({ color = 'currentColor' }: { color?: string }) => (
+  <svg
+    width="12"
+    height="17"
+    viewBox="0 0 12 17"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M0.804222 0.578712L11.0294 8.73828L0.804222 16.8979V0.578712Z"
+      fill={color}
+    ></path>
+  </svg>
+);
+
+const ShipMonitoringIcon = ({ color = 'currentColor' }: { color?: string }) => (
   <svg
     width="31"
     height="29"
@@ -58,7 +73,7 @@ const ShipMonitoringIcon = ({ color = 'black' }: { color?: string }) => (
   </svg>
 );
 
-const ContainerIcon = ({ color = 'black' }: { color?: string }) => (
+const ContainerIcon = ({ color = 'currentColor' }: { color?: string }) => (
   <svg
     width="29"
     height="23"
@@ -129,7 +144,7 @@ const ContainerIcon = ({ color = 'black' }: { color?: string }) => (
   </svg>
 );
 
-const ExcelIcon = ({ color = 'black' }: { color?: string }) => (
+const ExcelIcon = ({ color = 'currentColor' }: { color?: string }) => (
   <svg
     width="20"
     height="20"
@@ -196,7 +211,7 @@ const ExcelIcon = ({ color = 'black' }: { color?: string }) => (
   </svg>
 );
 
-const ScheduleIcon = ({ color = 'black' }: { color?: string }) => (
+const ScheduleIcon = ({ color = 'currentColor' }: { color?: string }) => (
   <svg
     width="24"
     height="26"
@@ -289,7 +304,7 @@ const ScheduleIcon = ({ color = 'black' }: { color?: string }) => (
   </svg>
 );
 
-const StatisticsIcon = ({ color = 'black' }: { color?: string }) => (
+const StatisticsIcon = ({ color = 'currentColor' }: { color?: string }) => (
   <svg
     width="32"
     height="22"
@@ -334,7 +349,7 @@ const StatisticsIcon = ({ color = 'black' }: { color?: string }) => (
   </svg>
 );
 
-const UserIcon = ({ color = 'black' }: { color?: string }) => (
+const UserIcon = ({ color = 'currentColor' }: { color?: string }) => (
   <svg
     width="26"
     height="26"
@@ -359,11 +374,32 @@ const UserIcon = ({ color = 'black' }: { color?: string }) => (
   </svg>
 );
 
+const SuccessIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 40 41"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="20" cy="20.5" r="20" fill="#4CAF50" />
+    <path
+      d="M12 20.5L18 26.5L28 14.5"
+      stroke="white"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+);
+
 export {
   ContainerIcon,
   ExcelIcon,
+  RightArrowIcon,
   ScheduleIcon,
   ShipMonitoringIcon,
   StatisticsIcon,
+  SuccessIcon,
   UserIcon,
 };

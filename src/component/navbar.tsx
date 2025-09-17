@@ -29,6 +29,7 @@ const Navbar = () => {
           />
         }
         isActive={pathname === '/'}
+        disabled={true}
       />
 
       {/* 메인 네비게이션 메뉴 */}
@@ -38,6 +39,7 @@ const Navbar = () => {
           icon={<ShipMonitoringIcon />}
           label={'선박\n모니터링'}
           isActive={pathname.startsWith('/ship-monitoring')}
+          disabled={true}
         />
         <NavMenuItem
           href="/t-container"
@@ -50,30 +52,35 @@ const Navbar = () => {
           icon={<ScheduleIcon />}
           label={'선석\n스케줄(G)'}
           isActive={pathname === '/schedule'}
+          disabled={true}
         />
         <NavMenuItem
           href="/table-schedule"
           icon={<ScheduleIcon />}
           label={'선석\n스케줄(T)'}
           isActive={pathname.startsWith('/table-schedule')}
+          disabled={true}
         />
         <NavMenuItem
           href="/container"
           icon={<ContainerIcon />}
           label={'컨테이너\n조회'}
           isActive={pathname.startsWith('/container')}
+          disabled={true}
         />
         <NavMenuItem
           href="/statistics/portmis-statistics"
           icon={<StatisticsIcon />}
           label={'통계'}
           isActive={pathname.startsWith('/statistics')}
+          disabled={true}
         />
         <NavMenuItem
           href="/user/address-book"
           icon={<UserIcon />}
           label={'개인화\n설정'}
           isActive={pathname.startsWith('/user')}
+          disabled={true}
         />
       </div>
 
@@ -90,6 +97,7 @@ const Navbar = () => {
         }
         label={'Port-i'}
         isActive={pathname === '/user/profile'}
+        disabled={true}
       />
     </nav>
   );
@@ -100,21 +108,34 @@ const NavMenuItem = ({
   icon,
   label,
   isActive,
+  disabled,
 }: {
   href: string;
   icon: React.ReactNode;
   label?: string;
   isActive?: boolean;
+  disabled?: boolean;
 }) => {
   const activeClasses = isActive
     ? 'text-primary bg-gray-100 font-bold'
     : 'bg-white text-gray-900 font-light';
 
+  const baseClasses = `relative flex flex-col items-center justify-center h-26 gap-2 whitespace-pre-line py-3 text-center text-lg/5 ${activeClasses}`;
+  const disabledClasses = disabled
+    ? 'opacity-50 cursor-not-allowed'
+    : 'hover:bg-gray-100';
+
+  if (disabled) {
+    return (
+      <div className={`${baseClasses} ${disabledClasses}`}>
+        {icon}
+        {label}
+      </div>
+    );
+  }
+
   return (
-    <Link
-      href={href}
-      className={`relative flex flex-col items-center justify-center h-26 gap-2 whitespace-pre-line py-3 text-center text-lg/5 hover:bg-gray-100 ${activeClasses}`}
-    >
+    <Link href={href} className={`${baseClasses} ${disabledClasses}`}>
       {icon}
       {label}
     </Link>

@@ -52,6 +52,13 @@
   --color-table-row: #ededed;
   --color-stroke: #dedede;
   --color-control: #bcbcbc;
+  --color-radiance: #0092fc;
+  --color-crimson: #e12c3e;
+
+  /* 박스 보더 색상 */
+  --box-border-radiance: #0092fc;
+  --box-border-crimson: #e12c3e;
+  --box-border-stroke: #e2e8f0;
 }
 
 :root {
@@ -168,4 +175,25 @@ h2 {
 
 .scrollbar-always::-webkit-scrollbar-corner {
   background: #f1f1f1;
+}
+
+/* 박스 스타일 클래스 */
+.box-border-radiance-thin {
+  box-shadow: inset 0 0 0 1px var(--box-border-radiance);
+}
+
+.box-border-radiance-thick {
+  box-shadow: inset 0 0 0 3px var(--box-border-radiance);
+}
+
+.box-border-crimson-thin {
+  box-shadow: inset 0 0 0 1px var(--box-border-crimson);
+}
+
+.box-border-crimson-thick {
+  box-shadow: inset 0 0 0 3px var(--box-border-crimson);
+}
+
+.box-border-stroke {
+  box-shadow: inset 0 0 0 1px var(--box-border-stroke);
 }
