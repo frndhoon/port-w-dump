@@ -5,6 +5,8 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  SkipBack,
+  SkipForward,
 } from 'lucide-react';
 
 import { TContainerListResponse } from '@/app/t-container/t-container.type';
@@ -69,6 +71,17 @@ const TContainerPagination = ({
 
   const pageNumbers = getPageNumbers();
 
+  // 첫 페이지와 마지막 페이지로 이동하는 함수들
+  const goToFirstPage = () => {
+    if (isFetching || isError || displayPage === 0) return;
+    onPageChange(0);
+  };
+
+  const goToLastPage = () => {
+    if (isFetching || isError || displayPage >= totalPages - 1) return;
+    onPageChange(totalPages - 1);
+  };
+
   // 10페이지씩 이동하는 함수들
   const goToPrevious10Pages = () => {
     if (isFetching || isError || displayPage < 10) return;
@@ -107,8 +120,18 @@ const TContainerPagination = ({
         <div className="flex">
           <PaginationItem>
             <PaginationLink
+              onClick={goToFirstPage}
+              className={`rounded-r-none border border-control ${isFetching || isError || displayPage === 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+              aria-disabled={isFetching || isError || displayPage === 0}
+            >
+              <SkipBack className="h-4 w-4" />
+              <span className="sr-only">첫 페이지</span>
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink
               onClick={goToPrevious10Pages}
-              className={`rounded-r-none border border-control ${isFetching || isError || displayPage < 10 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+              className={`rounded-none border border-control border-l-0 ${isFetching || isError || displayPage < 10 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
               aria-disabled={isFetching || isError || displayPage < 10}
             >
               <ChevronsLeft className="h-4 w-4" />
@@ -134,6 +157,7 @@ const TContainerPagination = ({
               isActive={page === currentPageDisplay}
               className={`${page === currentPageDisplay ? 'border-none bg-filter' : ''} ${isFetching || isError ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
               aria-disabled={isFetching || isError}
+              suppressHydrationWarning
             >
               {page}
             </PaginationLink>
@@ -144,7 +168,7 @@ const TContainerPagination = ({
           <PaginationItem>
             <PaginationLink
               onClick={handleNextPage}
-              className={`rounded-r-none border border-control ${isFetching || isError || displayPage >= totalPages - 1 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+              className={`rounded-none border border-control ${isFetching || isError || displayPage >= totalPages - 1 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
               aria-disabled={
                 isFetching || isError || displayPage >= totalPages - 1
               }
@@ -156,13 +180,25 @@ const TContainerPagination = ({
           <PaginationItem>
             <PaginationLink
               onClick={goToNext10Pages}
-              className={`rounded-l-none border border-control border-l-0 ${isFetching || isError || displayPage + 10 >= totalPages ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+              className={`rounded-none border border-control border-l-0 ${isFetching || isError || displayPage + 10 >= totalPages ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
               aria-disabled={
                 isFetching || isError || displayPage + 10 >= totalPages
               }
             >
               <ChevronsRight className="h-4 w-4" />
               <span className="sr-only">다음 10페이지</span>
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink
+              onClick={goToLastPage}
+              className={`rounded-l-none border border-control border-l-0 ${isFetching || isError || displayPage >= totalPages - 1 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+              aria-disabled={
+                isFetching || isError || displayPage >= totalPages - 1
+              }
+            >
+              <SkipForward className="h-4 w-4" />
+              <span className="sr-only">마지막 페이지</span>
             </PaginationLink>
           </PaginationItem>
         </div>

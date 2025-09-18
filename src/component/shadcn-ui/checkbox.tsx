@@ -7,10 +7,9 @@ import * as React from 'react';
 import { cn } from '@/lib/shadcn.lib';
 
 // 커스텀 컴포넌트 추가
-interface CheckboxProps
-  extends React.ComponentProps<typeof CheckboxPrimitive.Root> {
+type CheckboxProps = React.ComponentProps<typeof CheckboxPrimitive.Root> & {
   variant?: 'default' | 'custom';
-}
+};
 
 const Checkbox = ({
   className,

@@ -73,7 +73,6 @@ const TContainerPage = async ({
       operations: formattedOperations,
     };
 
-    console.log(data);
     const dockType =
       data?.dischargeTerminalName === data?.loadingTerminalName
         ? '자부두'

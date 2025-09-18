@@ -6,10 +6,10 @@ import { ExcelIcon } from '@/component/icons';
 import { Button } from '@/component/shadcn-ui/button';
 import { useExcelDownload } from '@/hook/useExcelDownload';
 
-interface ExcelDownloadButtonProps {
+type ExcelDownloadButtonProps = {
   operations: Operation[];
   conNo?: string;
-}
+};
 
 export const ExcelDownloadButton = ({
   operations,

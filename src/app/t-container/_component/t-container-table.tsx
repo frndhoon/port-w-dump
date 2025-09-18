@@ -34,7 +34,7 @@ type ContainerTableProps = {
 };
 
 const ROW_HEIGHT = 40; // 고정 행 높이 (px)
-const MIN_VISIBLE_ROWS = 13; // 최소 표시할 행 개수
+const MIN_VISIBLE_ROWS = 20; // 최소 표시할 행 개수
 
 // 복사 가능한 컬럼들
 const COPYABLE_COLUMNS: ColumnName[] = [
@@ -302,7 +302,7 @@ const TContainerTable = ({
   // 로딩 상태 테이블 바디
   const LoadingTableBody = () => (
     <TableBody className="[&_tr:last-child]:border-0 bg-white">
-      {Array.from({ length: MIN_VISIBLE_ROWS }).map((_, index) => (
+      {Array.from({ length: MIN_VISIBLE_ROWS + 5 }).map((_, index) => (
         <TableRow
           key={`skeleton-${index}`}
           style={{ height: `${ROW_HEIGHT}px` }}

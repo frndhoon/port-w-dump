@@ -4,12 +4,14 @@ import * as React from 'react';
 import { Input } from '@/component/shadcn-ui/input';
 import { cn } from '@/lib/shadcn.lib';
 
-interface SearchInputProps
-  extends Omit<React.ComponentProps<typeof Input>, 'value' | 'onChange'> {
+type SearchInputProps = Omit<
+  React.ComponentProps<typeof Input>,
+  'value' | 'onChange'
+> & {
   maxKeywords?: number;
   onSearch?: (keyword: string) => void;
   initialValue?: string;
-}
+};
 
 const SearchInput = ({
   className,

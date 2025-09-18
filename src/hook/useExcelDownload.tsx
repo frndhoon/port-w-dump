@@ -5,10 +5,10 @@ import React, { useState } from 'react';
 import { downloadExcelWithLoading } from '@/app/t-container/_util/excel-utils';
 import { VesselLoader } from '@/component/vessel-loader';
 
-interface UseExcelDownloadProps {
+type UseExcelDownloadProps = {
   onSuccess?: () => void;
   onError?: (error: Error) => void;
-}
+};
 
 export const useExcelDownload = ({
   onSuccess,
@@ -17,7 +17,7 @@ export const useExcelDownload = ({
   const [isDownloading, setIsDownloading] = useState(false);
 
   const downloadExcel = async (
-    data: (string | number)[][],
+  data: (string | number)[][],
     filename: string,
     title: string
   ) => {
