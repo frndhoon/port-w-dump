@@ -62,7 +62,7 @@
         "operationSubject": null,
         "operationStatus": "작업예정",
         "operationStartedTime": "2025-09-05T16:00:00",
-        "operationEndedTime": null
+        "operationEndedTime": "2025-09-05T17:00:00"
       },
       {
         "terminalName": "HPNT",
@@ -70,8 +70,8 @@
         "operationType": "DISCHARGE",
         "operationSubject": "HPNT",
         "operationStatus": "작업예정",
-        "operationStartedTime": null,
-        "operationEndedTime": null
+        "operationStartedTime": "2025-09-05T17:00:00",
+        "operationEndedTime": "2025-09-05T18:00:00"
       }
     ],
     "operationalIncidents": []

@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { downloadExcelWithLoading } from '@/app/t-container/_util/excel-utils';
-import { VesselLoader } from '@/component/vessel-loader';
 
 type UseExcelDownloadProps = {
   onSuccess?: () => void;
@@ -17,7 +16,7 @@ export const useExcelDownload = ({
   const [isDownloading, setIsDownloading] = useState(false);
 
   const downloadExcel = async (
-  data: (string | number)[][],
+    data: (string | number)[][],
     filename: string,
     title: string
   ) => {
@@ -29,13 +28,8 @@ export const useExcelDownload = ({
     }
   };
 
-  const LoadingOverlay = () => {
-    return isDownloading ? <VesselLoader /> : null;
-  };
-
   return {
     downloadExcel,
     isDownloading,
-    LoadingOverlay,
   };
 };

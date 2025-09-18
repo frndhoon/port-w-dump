@@ -43,7 +43,7 @@ const RootLayout = ({
         <QueryProvider>
           <div className="relative flex overflow-hidden">
             <Navbar />
-            <main className="relative h-screen w-full flex-1 overflow-x-auto overflow-y-hidden scrollbar-always">
+            <main className="relative flex-1 w-full h-screen overflow-x-auto overflow-y-hidden scrollbar-always">
               {children}
             </main>
             <Toaster

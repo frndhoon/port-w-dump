@@ -7,7 +7,7 @@ import { AnomalyFilter } from '@/app/t-container/_component/anomaly-filter';
 import { OperationStatusFilter } from '@/app/t-container/_component/operation-status-filter';
 import { SearchBar } from '@/app/t-container/_component/search-bar';
 import { TerminalFilter } from '@/app/t-container/_component/terminal-filter';
-import { DEFAULT_COLUMN } from '@/app/t-container/t-container.constants';
+import { DEFAULT_COLUMN } from '@/app/t-container/t-container.constant';
 import {
   ColumnName,
   ColumnObject,

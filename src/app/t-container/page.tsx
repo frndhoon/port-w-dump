@@ -8,7 +8,7 @@ import { TContainerSearchFilters } from '@/app/t-container/_component/t-containe
 import { TContainerTable } from '@/app/t-container/_component/t-container-table';
 import { useTContainerList } from '@/app/t-container/_hook/useTContainer';
 import { calculateSearchFailure } from '@/app/t-container/_util/search-utils';
-import { DEFAULT_COLUMN } from '@/app/t-container/t-container.constants';
+import { DEFAULT_COLUMN } from '@/app/t-container/t-container.constant';
 import {
   ColumnName,
   ColumnObject,
@@ -239,7 +239,7 @@ const TContainerPage = () => {
             <h2 className="opacity-40">환적 컨테이너 조회</h2>
             <h1>화물 모니터링</h1>
           </div>
-          <div className="flex flex-row gap-2 items-center">
+          <div className="flex flex-row items-center gap-2">
             {isError || !totalCount ? (
               <p className="font-bold">총 0개</p>
             ) : totalCount ? (
@@ -293,9 +293,9 @@ const TContainerPage = () => {
       />
 
       {/* 푸터 */}
-      <footer className="bg-white border-t border-stroke flex-shrink-0">
-        <div className="flex flex-row items-center w-full justify-center gap-2 py-8 px-4 flex-nowrap">
-          <Badge variant="gray" className="text-sm py-1">
+      <footer className="flex-shrink-0 bg-white border-t border-stroke">
+        <div className="flex flex-row items-center justify-center w-full gap-2 px-4 py-8 flex-nowrap">
+          <Badge variant="gray" className="py-1 text-sm">
             컨테이너 수
             <span className="font-bold">
               총 {isError || !totalCount ? 0 : totalCount}개
@@ -305,7 +305,7 @@ const TContainerPage = () => {
             <TooltipTrigger asChild>
               <Badge
                 variant="outlineDestructive"
-                className="text-sm py-1 cursor-help"
+                className="py-1 text-sm cursor-help"
               >
                 조회실패
                 <span className="font-bold underline">

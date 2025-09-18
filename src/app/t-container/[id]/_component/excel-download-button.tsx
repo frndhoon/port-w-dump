@@ -1,10 +1,11 @@
 'use client';
 
+import { useExcelDownload } from '@/app/t-container/_hook/useExcelDownload';
 import { convertOperationLogToExcelData } from '@/app/t-container/_util/excel-utils';
 import { Operation } from '@/app/t-container/t-container.type';
 import { ExcelIcon } from '@/component/icons';
 import { Button } from '@/component/shadcn-ui/button';
-import { useExcelDownload } from '@/hook/useExcelDownload';
+import { VesselLoader } from '@/component/vessel-loader';
 
 type ExcelDownloadButtonProps = {
   operations: Operation[];
@@ -15,7 +16,7 @@ export const ExcelDownloadButton = ({
   operations,
   conNo,
 }: ExcelDownloadButtonProps) => {
-  const { downloadExcel, isDownloading, LoadingOverlay } = useExcelDownload();
+  const { downloadExcel, isDownloading } = useExcelDownload();
 
   const handleDownload = async () => {
     const excelData = convertOperationLogToExcelData(operations);
@@ -36,7 +37,7 @@ export const ExcelDownloadButton = ({
         <ExcelIcon />
         {isDownloading ? '다운로드 중...' : '엑셀 다운로드'}
       </Button>
-      <LoadingOverlay />
+      {isDownloading && <VesselLoader />}
     </>
   );
 };

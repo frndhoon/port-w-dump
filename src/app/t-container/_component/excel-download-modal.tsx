@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import { useExcelDownload } from '@/app/t-container/_hook/useExcelDownload';
 import { convertToExcelData } from '@/app/t-container/_util/excel-utils';
 import {
   ColumnObject,
@@ -17,7 +18,7 @@ import {
   DialogTitle,
 } from '@/component/shadcn-ui/dialog';
 import { Label } from '@/component/shadcn-ui/label';
-import { useExcelDownload } from '@/hook/useExcelDownload';
+import { VesselLoader } from '@/component/vessel-loader';
 
 const ExcelDownloadModal = ({
   isOpen,
@@ -42,7 +43,7 @@ const ExcelDownloadModal = ({
   });
 
   // 엑셀 다운로드 훅 사용
-  const { downloadExcel, isDownloading, LoadingOverlay } = useExcelDownload({
+  const { downloadExcel, isDownloading } = useExcelDownload({
     onSuccess: () => onClose(),
   });
 
@@ -183,7 +184,7 @@ const ExcelDownloadModal = ({
       </DialogContent>
 
       {/* 로딩 오버레이 */}
-      <LoadingOverlay />
+      {isDownloading && <VesselLoader />}
     </Dialog>
   );
 };

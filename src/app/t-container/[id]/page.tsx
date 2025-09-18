@@ -205,8 +205,21 @@ const TContainerPage = async ({
                 {/* 컨테이너 상태 정보 섹션 */}
                 <div className="flex flex-col w-full">
                   <div className="h-12 flex items-center gap-8 px-8 bg-primary text-2xl font-semibold text-white min-w-[1200px]">
-                    <div className="flex items-center justify-center h-8 px-4 py-1 rounded-full bg-secondary">
-                      <p>작업중</p>
+                    <div
+                      className={`flex items-center justify-center h-8 px-4 py-1 rounded-full ${
+                        data?.operations?.[data?.operations?.length - 1]
+                          ?.operationStatus === '작업완료'
+                          ? 'bg-green-500'
+                          : data?.operations?.[data?.operations?.length - 1]
+                                ?.operationStatus === '작업중'
+                            ? 'bg-secondary'
+                            : 'bg-gray-500'
+                      }`}
+                    >
+                      <p>
+                        {data?.operations?.[data?.operations?.length - 1]
+                          ?.operationStatus || '작업예정'}
+                      </p>
                     </div>
                     <p>컨테이너 번호</p>
                     <p>{data?.conNo}</p>

@@ -1,8 +1,8 @@
 import { CargoIcon } from '@/app/t-container/[id]/_component/icons';
 import {
-  otherDockOperationKorean,
-  selfDockOperationKorean,
-} from '@/app/t-container/[id]/_type/operation.type';
+  OTHER_DOCK_OPERATION_KOREAN,
+  SELF_DOCK_OPERATION_KOREAN,
+} from '@/app/t-container/[id]/_constant/operation.constant';
 import {
   getBackgroundClass,
   getBoxPaddingClass,
@@ -37,10 +37,10 @@ const OperationBox = ({
   isSelfDock: boolean;
 }) => {
   const koreanOperationType = isSelfDock
-    ? selfDockOperationKorean[
-        operationType as keyof typeof selfDockOperationKorean
+    ? SELF_DOCK_OPERATION_KOREAN[
+        operationType as keyof typeof SELF_DOCK_OPERATION_KOREAN
       ]
-    : otherDockOperationKorean[operationType];
+    : OTHER_DOCK_OPERATION_KOREAN[operationType];
 
   // 자부두의 경우 야드일 때 mixed=true
   const isMixed =
@@ -100,6 +100,11 @@ const OperationBox = ({
     return (
       <div className={boxClassName}>
         <div className="flex flex-col items-center justify-center flex-1 space-y-2">
+          <span
+            className={`${getCommonTitleClass()} text-lg ${getStatusTextClass(operationStatus)}`}
+          >
+            {operationStatus}
+          </span>
           <h3
             className={`${getCommonTitleClass()} ${getStatusTextClass(operationStatus)}`}
           >
