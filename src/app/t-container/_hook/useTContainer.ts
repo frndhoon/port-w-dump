@@ -7,6 +7,8 @@ import {
   TContainerListRequest,
   TContainerListResponse,
 } from '@/app/t-container/t-container.type';
+// Mock 데이터 import
+// import mockListData from '@/mock/mock-use-tcontainer-list.json';
 import {
   shouldRetry,
   showDetailErrorMessage,
@@ -33,8 +35,10 @@ const useTContainerList = (
         TContainerListRequest,
         TContainerListResponse['result']
       >('/containers/monitoring', queryParams, requestBody);
-
       return responseData.result;
+
+      // Mock 데이터 사용
+      // return mockListData.result;
     },
 
     placeholderData: keepPreviousData,

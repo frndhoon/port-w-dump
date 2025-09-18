@@ -5,14 +5,13 @@ import { BackButton } from '@/app/t-container/[id]/_component/back-button';
 import { ExcelDownloadButton } from '@/app/t-container/[id]/_component/excel-download-button';
 import {
   BlueCargoArrowIcon,
+  CargoIcon,
   RedCargoArrowIcon,
   TruckIcon,
   VesselIcon,
 } from '@/app/t-container/[id]/_component/icons';
-import {
-  OperationBox,
-  TransportBox,
-} from '@/app/t-container/[id]/_component/operation-box';
+import { OperationBox } from '@/app/t-container/[id]/_component/operation-box';
+import { TransportBox } from '@/app/t-container/[id]/_component/transport-box';
 import {
   Operation,
   TContainerDetailResponse,
@@ -29,6 +28,20 @@ import {
   TableHeader,
   TableRow,
 } from '@/component/shadcn-ui/table';
+// Mock 데이터 import
+// import mockDetailSelf from '@/mock/mock-use-tcontainer-detail-30002.json';
+// import mockDetailOther from '@/mock/mock-use-tcontainer-detail-30009.json';
+
+// Mock 데이터 선택 함수
+// const getMockData = (id: string) => {
+//   const mockDataMap: Record<string, any> = {
+//     // 순차적 진행 상황별 mock 데이터
+//     '30002': mockDetailSelf, // 타부두: 작업중/작업예정/작업예정
+//     '30009': mockDetailOther, // 자부두: 작업완료/작업예정/작업예정
+//   };
+
+//   return mockDataMap[id];
+// };
 
 const TContainerPage = async ({
   params,
@@ -41,6 +54,11 @@ const TContainerPage = async ({
     const response = await getInstance(`/containers/monitoring/${id}`);
     const rawData: TContainerDetailResponse['result'] =
       response.result as TContainerDetailResponse['result'];
+
+    // Mock 데이터 사용
+    // const mockResponse = getMockData(id);
+    // const rawData: TContainerDetailResponse['result'] =
+    //   mockResponse.result as TContainerDetailResponse['result'];
 
     // 시간을 미리 가공하여 새로운 데이터로 재선언
     const formattedOperations =
@@ -82,6 +100,14 @@ const TContainerPage = async ({
     const getTransportBoxStatus = () => {
       if (dockType === '자부두') return null; // 자부두는 운송중 박스 없음
 
+      // GATE_IN 작업 찾기
+      const gateInOperation = data?.operations?.find(
+        op => op.operationType === 'GATE_IN'
+      );
+
+      // GATE_IN이 없으면 운송중 박스 표시 안함
+      if (!gateInOperation) return null;
+
       // GATE_OUT, DISCHARGE_YARD, DISCHARGE 중 하나라도 작업중 또는 작업완료인지 확인
       const hasActiveDischargeOperation = data?.operations?.some(
         op =>
@@ -90,23 +116,28 @@ const TContainerPage = async ({
           ) && ['작업중', '작업완료'].includes(op.operationStatus)
       );
 
-      // GATE_IN 작업 찾기
-      const gateInOperation = data?.operations?.find(
-        op => op.operationType === 'GATE_IN'
-      );
-
       // GATE_OUT, DISCHARGE_YARD, DISCHARGE 중 하나라도 작업중/완료라면 mixed=true로 운송완료
       if (hasActiveDischargeOperation) {
         return { status: '작업완료', mixed: true, loading: false };
       }
 
-      // GATE_IN만 작업완료라면 운송중에 loading상태
-      if (gateInOperation?.operationStatus === '작업완료') {
-        return { status: '작업중', mixed: false, loading: true };
+      // GATE_IN이 작업완료라면 운송중에 loading상태
+      if (gateInOperation.operationStatus === '작업완료') {
+        return { status: '작업중', mixed: true, loading: true };
       }
 
-      // 그렇지 않다면 - (null 반환)
-      return null;
+      // GATE_IN이 작업예정이면 운송예정 상태로 표시
+      if (gateInOperation.operationStatus === '작업예정') {
+        return { status: '작업예정', mixed: false, loading: false };
+      }
+
+      // GATE_IN이 작업중이면 작업예정 상태로 표시
+      if (gateInOperation.operationStatus === '작업중') {
+        return { status: '작업예정', mixed: false, loading: false };
+      }
+
+      // 기본값: 작업예정
+      return { status: '작업예정', mixed: false, loading: false };
     };
 
     // 작업 단계의 상태를 결정하는 함수 (순차적 진행 고려)
@@ -170,11 +201,11 @@ const TContainerPage = async ({
                   {data?.conNo}
                 </div>
               </div>
-              <div className="flex w-full flex-col gap-8">
+              <div className="flex flex-col w-full gap-8">
                 {/* 컨테이너 상태 정보 섹션 */}
                 <div className="flex flex-col w-full">
                   <div className="h-12 flex items-center gap-8 px-8 bg-primary text-2xl font-semibold text-white min-w-[1200px]">
-                    <div className="h-8 flex items-center justify-center rounded-full bg-secondary px-4 py-1">
+                    <div className="flex items-center justify-center h-8 px-4 py-1 rounded-full bg-secondary">
                       <p>작업중</p>
                     </div>
                     <p>컨테이너 번호</p>
@@ -207,7 +238,7 @@ const TContainerPage = async ({
                   <div className="mt-[-2rem] flex items-center min-w-[1200px]">
                     {dockType === '자부두' ? (
                       // 자부두: 하나의 터미널만 표시
-                      <div className="flex py-2 items-center w-full border-r-2 border-r-white bg-filter justify-center">
+                      <div className="flex items-center justify-center w-full py-2 border-r-2 border-r-white bg-filter">
                         <p className="text-lg font-semibold">
                           {data?.dischargeTerminalName}
                         </p>
@@ -241,7 +272,7 @@ const TContainerPage = async ({
                     data?.loadingTerminalName ? (
                       // 자부두: 1:1 비율
                       <>
-                        <div className="flex h-full flex-1 flex-col items-center pb-16 pt-8 text-center font-medium">
+                        <div className="flex flex-col items-center flex-1 h-full pt-8 pb-16 font-medium text-center">
                           <div className="flex items-start gap-x-2">
                             <span className="flex items-center rounded-xs border border-[#00000005] bg-[#FFE5E5] px-1 mt-1.5 text-xs text-crimson">
                               양하
@@ -254,9 +285,15 @@ ${data?.dischargeShippingVoyageNo}`}
                           <div className="relative mt-auto">
                             {/* 양하 선박 시각화 컴포넌트 자리 */}
                             {data?.operations[0].operationStatus ===
-                              '작업완료' && (
-                              <RedCargoArrowIcon className="absolute top-5 left-10" />
-                            )}
+                              '작업완료' &&
+                              !(
+                                data?.operations[data.operations.length - 1]
+                                  .operationStatus === '작업완료'
+                              ) &&
+                              data?.operations[1].operationStatus ===
+                                '작업예정' && (
+                                <RedCargoArrowIcon className="absolute bottom-10 left-7" />
+                              )}
                             <VesselIcon />
                           </div>
                         </div>
@@ -264,7 +301,7 @@ ${data?.dischargeShippingVoyageNo}`}
                         {/* 구분선 */}
                         <div className="w-px h-full bg-white"></div>
 
-                        <div className="flex h-full flex-1 flex-col items-center pb-16 pt-8 text-center font-medium">
+                        <div className="flex flex-col items-center flex-1 h-full pt-8 pb-16 font-medium text-center">
                           <div className="flex items-start gap-x-2">
                             <span className="flex items-center rounded-xs border border-[#00000005] bg-[#D9EFFF] px-1 mt-1.5 text-xs text-radiance">
                               선적
@@ -274,7 +311,7 @@ ${data?.dischargeShippingVoyageNo}`}
 ${data?.loadingShippingVoyageNo}`}
                             </h2>
                           </div>
-                          <div className="mt-auto relative">
+                          <div className="relative mt-auto">
                             {/* 선적 선박 시각화 컴포넌트 자리 */}
                             {data?.operations[data?.operations.length - 1]
                               .operationStatus === '작업완료' && (
@@ -298,12 +335,18 @@ ${data?.loadingShippingVoyageNo}`}
 ${data?.dischargeShippingVoyageNo}`}
                             </h2>
                           </div>
-                          <div className="mt-auto relative">
+                          <div className="relative mt-auto">
                             {/* 양하 선박 시각화 컴포넌트 자리 */}
                             {data?.operations[0].operationStatus ===
-                              '작업완료' && (
-                              <RedCargoArrowIcon className="absolute top-5 left-10" />
-                            )}
+                              '작업완료' &&
+                              !(
+                                data?.operations[data.operations.length - 1]
+                                  .operationStatus === '작업완료'
+                              ) &&
+                              data?.operations[1].operationStatus ===
+                                '작업예정' && (
+                                <RedCargoArrowIcon className="absolute bottom-10 left-7" />
+                              )}
                             <VesselIcon />
                           </div>
                         </div>
@@ -318,7 +361,16 @@ ${data?.dischargeShippingVoyageNo}`}
                               {data?.truckCode ? data?.truckCode : '-'}
                             </h2>
                           </div>
-                          <div className="mt-auto">
+                          <div className="relative mt-auto">
+                            {data?.operations[2].operationStatus ===
+                              '작업완료' &&
+                              data?.operations[3].operationStatus ===
+                                '작업예정' && (
+                                <CargoIcon
+                                  operationType="GATE_IN"
+                                  className="absolute bottom-6 left-5"
+                                />
+                              )}
                             <TruckIcon />
                           </div>
                         </div>
@@ -336,7 +388,7 @@ ${data?.dischargeShippingVoyageNo}`}
 ${data?.loadingShippingVoyageNo}`}
                             </h2>
                           </div>
-                          <div className="mt-auto relative">
+                          <div className="relative mt-auto">
                             {/* 선적 선박 시각화 컴포넌트 자리 */}
                             {data?.operations[data?.operations.length - 1]
                               .operationStatus === '작업완료' && (
@@ -351,7 +403,7 @@ ${data?.loadingShippingVoyageNo}`}
 
                   {/* 작업 프로세스 단계 표시 */}
                   <div className="flex flex-col -translate-y-8 min-w-[1200px] mx-2">
-                    <div className="flex-3 mx-auto flex items-center">
+                    <div className="flex items-center mx-auto flex-3">
                       {data?.operations?.map((operation, index) => {
                         const isGateIn = operation.operationType === 'GATE_IN';
                         const transportStatus = getTransportBoxStatus();
@@ -361,38 +413,34 @@ ${data?.loadingShippingVoyageNo}`}
                             {renderOperationBox(operation, index)}
 
                             {/* 타부두이고 양하반입 다음에 운송중 박스 추가 */}
-                            {dockType === '타부두' &&
-                              isGateIn &&
-                              transportStatus && (
-                                <>
-                                  <div className="flex h-20 w-6 items-center justify-center bg-control">
-                                    <RightArrowIcon />
-                                  </div>
-                                  <div className="w-50 h-50">
-                                    <TransportBox
-                                      operationType="GATE_IN" // 운송중은 양하반입과 관련된 작업
-                                      status={
-                                        (transportStatus?.status as
-                                          | '작업예정'
-                                          | '작업중'
-                                          | '작업완료') || '작업예정'
-                                      }
-                                      mixed={transportStatus?.mixed || false}
-                                      loading={
-                                        transportStatus?.loading || false
-                                      }
-                                    />
-                                  </div>
-                                  <div className="flex h-20 w-6 items-center justify-center bg-control">
-                                    <RightArrowIcon />
-                                  </div>
-                                </>
-                              )}
+                            {dockType === '타부두' && isGateIn && (
+                              <>
+                                <div className="flex items-center justify-center w-6 h-20 bg-control">
+                                  <RightArrowIcon />
+                                </div>
+                                <div className="w-50 h-50">
+                                  <TransportBox
+                                    operationType="GATE_IN" // 운송중은 양하반입과 관련된 작업
+                                    status={
+                                      (transportStatus?.status as
+                                        | '작업예정'
+                                        | '작업중'
+                                        | '작업완료') || '작업예정'
+                                    }
+                                    mixed={transportStatus?.mixed || false}
+                                    loading={transportStatus?.loading || false}
+                                  />
+                                </div>
+                                <div className="flex items-center justify-center w-6 h-20 bg-control">
+                                  <RightArrowIcon />
+                                </div>
+                              </>
+                            )}
 
                             {/* 일반적인 화살표 (운송중 박스가 아닌 경우) */}
                             {!(dockType === '타부두' && isGateIn) &&
                               index < (data?.operations?.length || 0) - 1 && (
-                                <div className="flex h-20 w-6 items-center justify-center bg-control">
+                                <div className="flex items-center justify-center w-6 h-20 bg-control">
                                   <RightArrowIcon />
                                 </div>
                               )}
@@ -413,22 +461,22 @@ ${data?.loadingShippingVoyageNo}`}
                     />
                   </div>
 
-                  <Table className="border-t border-t-black mb-10">
+                  <Table className="mb-10 border-t border-t-black">
                     <TableHeader className="h-10 border-t border-t-black bg-filter">
                       <TableRow className="text-lg">
-                        <TableHead className="h-12 w-40 select-none px-8">
+                        <TableHead className="w-40 h-12 px-8 select-none">
                           작업 단계
                         </TableHead>
-                        <TableHead className="h-12 w-40 select-none px-8">
+                        <TableHead className="w-40 h-12 px-8 select-none">
                           작업 주체
                         </TableHead>
-                        <TableHead className="h-12 w-40 select-none px-8">
+                        <TableHead className="w-40 h-12 px-8 select-none">
                           작업 상태
                         </TableHead>
-                        <TableHead className="h-12 w-40 select-none px-8 ">
+                        <TableHead className="w-40 h-12 px-8 select-none ">
                           작업 시작 일시
                         </TableHead>
-                        <TableHead className="h-12 w-40 select-none px-8">
+                        <TableHead className="w-40 h-12 px-8 select-none">
                           작업 종료 일시
                         </TableHead>
                       </TableRow>
@@ -452,7 +500,7 @@ ${data?.loadingShippingVoyageNo}`}
                         return (
                           <TableRow
                             key={index}
-                            className="border-b border-stroke text-left text-base font-light"
+                            className="text-base font-light text-left border-b border-stroke"
                           >
                             <TableCell className="h-16 px-8 py-4">
                               {operation.operationType}
@@ -500,13 +548,13 @@ ${data?.loadingShippingVoyageNo}`}
                   <ChevronRight size={30} />
                   {id}
                 </h2>
-                <Button variant="ghost" className="rounded-lg px-3 py-2">
-                  <ArrowLeft className="opacity cursor-pointer hover:opacity-100" />
+                <Button variant="ghost" className="px-3 py-2 rounded-lg">
+                  <ArrowLeft className="cursor-pointer opacity hover:opacity-100" />
                 </Button>
               </div>
               <div className="flex items-center justify-center min-h-[400px] min-w-[1200px]">
                 <div className="text-center">
-                  <h3 className="text-xl font-semibold text-red-600 mb-2">
+                  <h3 className="mb-2 text-xl font-semibold text-red-600">
                     데이터 로드 실패
                   </h3>
                   <p className="text-gray-600">

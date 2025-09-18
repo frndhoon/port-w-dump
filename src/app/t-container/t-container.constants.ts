@@ -20,7 +20,7 @@ const DEFAULT_COLUMN: ColumnObject = {
     label: '선적 선박',
     order: 2,
     visible: true,
-    width: 'w-32',
+    width: 'w-40',
   },
   transshipmentType: {
     name: 'transshipmentType',

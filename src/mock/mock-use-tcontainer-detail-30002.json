@@ -1,0 +1,52 @@
+{
+  "statusCode": 200,
+  "message": "OK",
+  "result": {
+    "id": 30002,
+    "oprShipping": "HMM",
+    "conNo": "BEAU2034002",
+    "transshipmentType": "자부두",
+    "dischargeTerminalName": "PNIT",
+    "dischargeVesselName": "SEASPAN BRAVO",
+    "dischargeTerminalVesselCode": "HTBV",
+    "dischargeTerminalVoyageNo": "001",
+    "dischargeShippingVoyageNo": "0099W",
+    "loadingTerminalName": "PNIT",
+    "loadingVesselName": "SEASPAN BRAVO",
+    "loadingTerminalVesselCode": "HTBV",
+    "loadingTerminalVoyageNo": "001",
+    "loadingShippingVoyageNo": "0099W",
+    "truckerId": null,
+    "truckCode": null,
+    "operations": [
+      {
+        "terminalName": "PNITC010",
+        "berthCode": "T1",
+        "operationType": "LOADING",
+        "operationSubject": "PNITC010",
+        "operationStatus": "작업완료",
+        "operationStartedTime": "2025-09-05T08:00:00",
+        "operationEndedTime": "2025-09-05T09:30:00"
+      },
+      {
+        "terminalName": "PNITC010",
+        "berthCode": null,
+        "operationType": "DISCHARGE_YARD",
+        "operationSubject": null,
+        "operationStatus": "작업완료",
+        "operationStartedTime": "2025-09-05T10:00:00",
+        "operationEndedTime": "2025-09-05T11:30:00"
+      },
+      {
+        "terminalName": "PNITC010",
+        "berthCode": "T1",
+        "operationType": "DISCHARGE",
+        "operationSubject": "PNITC010",
+        "operationStatus": "작업완료",
+        "operationStartedTime": null,
+        "operationEndedTime": null
+      }
+    ],
+    "operationalIncidents": []
+  }
+}
